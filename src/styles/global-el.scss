@@ -1,0 +1,6 @@
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+    $menu: (
+    ),
+);
+@use "element-plus/theme-chalk/src/index.scss" as *;
+//修改变量参照文档https://github.com/element-plus/element-plus/blob/dev/packages/theme-chalk/src/common/var.scss
