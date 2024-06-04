@@ -1,15 +1,7 @@
 <template>
 	<el-row class="container">
 		<el-col :span="3" style="height: 100%">
-			<el-row
-				style="
-					justify-content: space-between;
-					align-items: center;
-					border-bottom: 1px solid var(--el-border-color);
-					height: 100%;
-					flex-direction: column;
-				"
-			>
+			<el-row class="history-column">
 				<div style="font-size: 1.25rem; font-weight: bold; line-height: 2" @click="getList">绘画记录</div>
 				<el-scrollbar style="height: calc(100% - 100px)">
 					<div
@@ -18,18 +10,13 @@
 						:class="index == mainIndex ? 'active-image' : ''"
 						@click="setMainImage(index)"
 					>
-						<el-image :src="'http://want-youwant.com/' + item.imageUrl" style="width: 100%"></el-image>
+						<el-image :src="item.src" style="width: 100%"></el-image>
 						<el-tooltip :content="item.keywords" placement="top" effect="light">
-							<el-text class="keywords" truncated>关键词：{{ item.prompt }}</el-text>
+							<el-text class="keywords" truncated>关键词：{{ item.keywords }}</el-text>
 						</el-tooltip>
 					</div>
 				</el-scrollbar>
-				<div
-					style="font-size: 1.25rem; font-weight: bold; line-height: 2; cursor: pointer"
-					@click="router.push('/home/drawHistory')"
-				>
-					更多创作记录
-				</div>
+				<div class="more-history" @click="router.push('/home/drawHistory')">更多创作记录</div>
 			</el-row>
 		</el-col>
 		<el-col :span="13" class="right" style="display: flex; flex-direction: column; justify-content: space-between">
@@ -45,7 +32,7 @@
 			</el-row>
 			<el-row style="justify-content: center; margin-bottom: 20px">
 				<el-input v-model="mainInput" style="width: 80%" :rows="1" type="textarea" placeholder="请输入关键词"> </el-input
-				><el-button @click="submit">提交</el-button>
+				><el-button @click="">提交</el-button>
 			</el-row>
 		</el-col>
 		<el-col :span="5" class="right">
@@ -260,22 +247,22 @@ const settings = reactive({
 	formLevel: 50
 });
 let historyImages = ref([
-	/*{
-    src: historyPng,
-    keywords: "蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠",
-  },
-  {
-    src: personPng,
-    keywords: "蜘蛛侠",
-  },
-  {
-    src: historyPng,
-    keywords: "蜘蛛侠",
-  },
-  {
-    src: personPng,
-    keywords: "蜘蛛侠",
-  },*/
+	{
+		src: historyPng,
+		keywords: '蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠蜘蛛侠'
+	},
+	{
+		src: personPng,
+		keywords: '蜘蛛侠'
+	},
+	{
+		src: historyPng,
+		keywords: '蜘蛛侠'
+	},
+	{
+		src: personPng,
+		keywords: '蜘蛛侠'
+	}
 ]);
 
 let artImages = reactive([
@@ -299,7 +286,7 @@ let artImages = reactive([
 let mainIndex = ref();
 let mainImage = ref();
 const setMainImage = (index) => {
-	mainImage.value = historyImages.value[index].imageUrl;
+	mainImage.value = historyImages.value[index].src;
 	mainIndex.value = index;
 };
 let mainInput = ref('');
@@ -330,7 +317,7 @@ const getList = async () => {
 	}
 };
 onMounted(() => {
-	getList();
+	//getList();
 });
 </script>
 <style lang="scss" scoped>
@@ -394,15 +381,19 @@ onMounted(() => {
 	.keywords {
 		background-color: gray;
 		color: white;
-		white-space: nowrap;
-		text-overflow: ellipsis;
 	}
 }
 
 .active-image {
 	border: 2px solid var(--el-color-primary);
 }
-
+.history-column {
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid var(--el-border-color);
+	height: 100%;
+	flex-direction: column;
+}
 @media (max-width: 1440px) {
 	.btn-container {
 		padding: 0;
@@ -411,5 +402,14 @@ onMounted(() => {
 	.des {
 		display: hidden;
 	}
+}
+.el-text.is-truncated {
+	white-space: normal;
+}
+.more-history {
+	font-size: 1.25rem;
+	font-weight: bold;
+	line-height: 2;
+	cursor: pointer;
 }
 </style>

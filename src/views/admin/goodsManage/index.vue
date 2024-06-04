@@ -16,5 +16,5 @@ const getList = async () => {
   const res = await apiGetList({ ...paging });
   tableData.value = res.data.data.records;
 };
-getList();
+//getList();
 </script>

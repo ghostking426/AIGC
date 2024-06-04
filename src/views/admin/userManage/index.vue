@@ -13,5 +13,5 @@ const getList = async () => {
   const res = await apiGetList();
   tableData.value = res.data.data.data;
 };
-getList();
+//getList();
 </script>
